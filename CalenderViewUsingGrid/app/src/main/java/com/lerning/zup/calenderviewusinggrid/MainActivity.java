@@ -1,8 +1,7 @@
 package com.lerning.zup.calenderviewusinggrid;
 
-import android.support.annotation.IntegerRes;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -18,14 +17,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mRecyclerView = (RecyclerView) findViewById(R.id.calendar);
+        mRecyclerView = findViewById(R.id.calendar);
         mAdapter = new CalendarAdapter(setDate(new GregorianCalendar(2017,12-1,1)));
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),7);
         mRecyclerView.setLayoutManager(gridLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
-
-
-
     }
     private List<Integer> getUsedDays() {
         List<Integer> mList = new ArrayList<>();

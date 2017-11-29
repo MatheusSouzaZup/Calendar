@@ -50,11 +50,10 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
                         @Override
                         public void onClick(View v) {
                             Toast.makeText(context,String.valueOf(position),Toast.LENGTH_SHORT).show();
-                            onCalenderListener.onClickItemDay();
                         }
                     });
                 } else {
-                    holder.tvDay.setTextColor(context.getResources().getColor(R.color.colorAccent));
+                    holder.tvDay.setTextColor(context.getResources().getColor(R.color.colorGrayLight));
                     holder.tvDay.setText(mDays.toString());
                 }
 
