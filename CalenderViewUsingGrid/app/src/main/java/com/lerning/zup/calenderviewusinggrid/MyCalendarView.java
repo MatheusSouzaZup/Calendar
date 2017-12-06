@@ -61,6 +61,29 @@ public class MyCalendarView extends RelativeLayout implements CalendarAdapter.On
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 7);
         mRecyclerView.setLayoutManager(gridLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
+
+        mViewWhite.setOnClickListener((v) -> {
+
+
+            mIvBall.animate()
+                    .y(posYBall)
+                    .alpha(0f)
+                    .scaleX(initScale)
+                    .scaleY(initScale)
+                    .setDuration(timeAnimation)
+                    .setInterpolator(new AnticipateOvershootInterpolator())
+                    .withEndAction(() -> mIvBall.setVisibility(View.INVISIBLE))
+                    .start();
+
+            mViewWhite.animate()
+                    .alpha(0f)
+                    .setDuration(200)
+                    .withEndAction(() -> {
+                        mViewWhite.setVisibility(View.INVISIBLE);
+                        mViewWhite.setClickable(false);
+                    })
+                    .start();
+        });
     }
 
     public int dpToPx(int dp) {
@@ -74,33 +97,13 @@ public class MyCalendarView extends RelativeLayout implements CalendarAdapter.On
         float x = view.getX() - dpToPx(10);
         if (x < 0) x = 0;
 
-        animationIN(x);
+        animationIn(x);
 
         mViewWhite.setVisibility(View.VISIBLE);
         mViewWhite.setClickable(true);
-
-        animationOut();
     }
 
-    private void animationOut() {
-        mViewWhite.setOnClickListener((v) -> {
-            mViewWhite.setVisibility(View.INVISIBLE);
-            mViewWhite.setClickable(false);
-
-            mIvBall.animate()
-                    .y(posYBall)
-                    .alpha(0f)
-                    .scaleX(initScale)
-                    .scaleY(initScale)
-                    .setDuration(timeAnimation)
-                    .setInterpolator(new AnticipateOvershootInterpolator())
-                    .withEndAction(() -> mIvBall.setVisibility(View.INVISIBLE))
-                    .start();
-
-        });
-    }
-
-    private void animationIN(float x) {
+    private void animationIn(float x) {
         mIvBall.setX(x);
         mIvBall.setY(posYBall + dpToPx(40));
         mIvBall.setAlpha(0f);
@@ -115,6 +118,12 @@ public class MyCalendarView extends RelativeLayout implements CalendarAdapter.On
                 .scaleY(1)
                 .setDuration(timeAnimation)
                 .setInterpolator(new OvershootInterpolator())
+                .start();
+
+        mViewWhite.setAlpha(0f);
+        mViewWhite.animate()
+                .alpha(0.82f)
+                .setDuration(200)
                 .start();
     }
 }

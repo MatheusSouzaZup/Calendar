@@ -15,7 +15,6 @@
         android:id="@+id/v_white"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:alpha="0.8"
         android:background="@color/colorWhite"
         android:visibility="invisible"
         android:clickable="true" />
