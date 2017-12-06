@@ -18,6 +18,8 @@ import java.util.GregorianCalendar;
 
 public class MyCalendarView extends RelativeLayout implements CalendarAdapter.OnCalenderListener {
 
+    private GregorianCalendar mDate;
+
     RecyclerView mRecyclerView;
     View mIvBall;
     View mViewWhite;
@@ -30,11 +32,18 @@ public class MyCalendarView extends RelativeLayout implements CalendarAdapter.On
 
     public MyCalendarView(Context context) {
         super(context);
+        mDate = new GregorianCalendar(2018, 2 - 1, 1);
         init();
     }
 
     public MyCalendarView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init();
+    }
+
+    public MyCalendarView(Context context, GregorianCalendar date) {
+        super(context);
+        mDate = date;
         init();
     }
 
@@ -47,8 +56,7 @@ public class MyCalendarView extends RelativeLayout implements CalendarAdapter.On
 
         marginTopPx = dpToPx(marginTop);
 
-        GregorianCalendar date = new GregorianCalendar(2018, 2 - 1, 1);
-        CalendarAdapter mAdapter = new CalendarAdapter(date, this);
+        CalendarAdapter mAdapter = new CalendarAdapter(mDate, this);
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 7);
         mRecyclerView.setLayoutManager(gridLayoutManager);

@@ -6,9 +6,11 @@
     android:layout_height="match_parent"
     tools:context="com.lerning.zup.calenderviewusinggrid.MainActivity">
 
-    <com.lerning.zup.calenderviewusinggrid.MyCalendarView
-        android:id="@+id/calendar_view"
+    <!--<include layout="@layout/my_calendar" />-->
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"/>
 
 </RelativeLayout>
