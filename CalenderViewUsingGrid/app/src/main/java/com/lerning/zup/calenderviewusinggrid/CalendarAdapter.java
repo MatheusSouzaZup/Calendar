@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -20,9 +19,15 @@ import java.util.List;
 public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.CalendarViewHolder> {
 
     List<Day> mList;
+    OnCalenderListener mListener;
 
     public CalendarAdapter(Calendar calendar) {
         mList = getMonthConfigurated(calendar);
+    }
+
+    public CalendarAdapter(Calendar calendar, OnCalenderListener listener) {
+        mList = getMonthConfigurated(calendar);
+        mListener = listener;
     }
 
     @Override
@@ -34,9 +39,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
     @Override
     public void onBindViewHolder(final CalendarViewHolder holder, final int position) {
         Day day = mList.get(position);
-        if (day == null){
-            return;
-        }
         holder.onBind(day);
     }
 
@@ -62,9 +64,9 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
     }
 
     private void createUsefulDays(MyCalendar myCalendar, List<Day> mList) {
-        for(int i = 1; i <= myCalendar.getMonthSize(); i++) {
+        for (int i = 1; i <= myCalendar.getMonthSize(); i++) {
             boolean isUsedDay = myCalendar.getUsedDays().contains(i);
-            mList.add(new Day(i + "", isUsedDay));
+            mList.add(new Day(i + "", isUsedDay, true));
         }
     }
 
@@ -77,8 +79,8 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
     private List<Integer> getUsedDays() {
         List<Integer> mList = new ArrayList<>();
         mList.add(1);
-        mList.add(5);
-        mList.add(9);
+        mList.add(4);
+        mList.add(10);
         mList.add(13);
         mList.add(21);
         return mList;
@@ -87,6 +89,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
     public class CalendarViewHolder extends RecyclerView.ViewHolder {
         TextView mTvDay;
         ImageView mIvDot;
+        Day mDay;
 
         public CalendarViewHolder(View itemView) {
             super(itemView);
@@ -95,26 +98,48 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
         }
 
         public void onBind(final Day day) {
+            if (day == null) {
+                mTvDay.setVisibility(View.INVISIBLE);
+                mIvDot.setVisibility(View.INVISIBLE);
+                return;
+            }
+
+            mDay = day;
             mTvDay.setText(day.getDay());
             if (day.isUsedDay()) {
-                enable(day);
+                setupUsedDay(day);
+            }
+
+            if (! day.isEnable()) {
+                mTvDay.setAlpha(0.2f);
+                mIvDot.setAlpha(0.2f);
             }
         }
 
-        private void enable(final Day day) {
+        private void setupUsedDay(final Day day) {
             mIvDot.setVisibility(View.VISIBLE);
             mTvDay.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.colorBlack));
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(itemView.getContext(), day.getDay(), Toast.LENGTH_SHORT).show();
-                    //onCalenderListener.onClickItemDay();
+                    /*for (Day d : mList){
+                        if (d == null || day.equals(d)){
+                            continue;
+                        }
+
+                        d.setEnable(false);
+                    }
+                    notifyDataSetChanged();*/
+
+                    if (mListener != null){
+                        mListener.onClickItemDay(v, day);
+                    }
                 }
             });
         }
     }
 
     public interface OnCalenderListener {
-        void onClickItemDay(MyCalendar myCalendar);
+        void onClickItemDay(View view, Day myCalendar);
     }
 }
