@@ -119,21 +119,18 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
         private void setupUsedDay(final Day day) {
             mIvDot.setVisibility(View.VISIBLE);
             mTvDay.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.colorBlack));
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    /*for (Day d : mList){
-                        if (d == null || day.equals(d)){
-                            continue;
-                        }
-
-                        d.setEnable(false);
+            itemView.setOnClickListener(v -> {
+                /*for (Day d : mList){
+                    if (d == null || day.equals(d)){
+                        continue;
                     }
-                    notifyDataSetChanged();*/
 
-                    if (mListener != null){
-                        mListener.onClickItemDay(v, day);
-                    }
+                    d.setEnable(false);
+                }
+                notifyDataSetChanged();*/
+
+                if (mListener != null){
+                    mListener.onClickItemDay(v, day);
                 }
             });
         }

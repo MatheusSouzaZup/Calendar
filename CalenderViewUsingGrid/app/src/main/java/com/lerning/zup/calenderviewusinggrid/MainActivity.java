@@ -1,17 +1,26 @@
 package com.lerning.zup.calenderviewusinggrid;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TableLayout;
+import android.widget.TextView;
 
 import java.util.GregorianCalendar;
 
 public class MainActivity extends AppCompatActivity {
 
     ViewPager mViewPager;
+    TabLayout mTabLayout;
+    String[] mMonths = {"Dezembro","Janeiro","Fevereiro","Março"};
+    int mCurrentItem = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +28,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mViewPager = findViewById(R.id.view_pager);
-
+        mTabLayout = findViewById(R.id.tabLayout);
+        mViewPager.setCurrentItem(mCurrentItem);
         mViewPager.setAdapter(new PagerAdapter() {
 
             GregorianCalendar[] mDates = {
@@ -56,5 +66,40 @@ public class MainActivity extends AppCompatActivity {
                 return view == object;
             }
         });
+        mTabLayout.setupWithViewPager(mViewPager);
+        setupTabs();
+    }
+    private void setupTabs() {
+        int distanceTab = getWindowManager().getDefaultDisplay().getWidth()/4;
+        mTabLayout.setupWithViewPager(mViewPager);
+        for (int i = 0; i < mMonths.length; i++) {
+            setUpItemTabs(i);
+        }
+        for(int i=0; i < mTabLayout.getTabCount(); i++) {
+            View tab = ((ViewGroup) mTabLayout.getChildAt(0)).getChildAt(i);
+            tab.setMinimumWidth(getWindowManager().getDefaultDisplay().getWidth() / 2);
+            tab.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            tab.requestLayout();
+            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) tab.getLayoutParams();
+            p.setMargins(i==0 ? distanceTab : 0 , 0, i == mTabLayout.getTabCount()-1 ? distanceTab : 0, 0);
+        }
+
+        mViewPager.setCurrentItem(mCurrentItem);
+    }
+    private void setUpItemTabs(int index) {
+        TabLayout.Tab mTab = mTabLayout.getTabAt(index);
+        mTab.setCustomView(null);
+        mTab.setCustomView(getCustomTab(mMonths[index], "7 dias"));
+    }
+
+    @NonNull
+    private View getCustomTab(String title,String usedDays) {
+        LayoutInflater mInflater = LayoutInflater.from(getApplicationContext());
+        View mCustomTab = mInflater.inflate(R.layout.item_tab_view, null);
+        TextView mTitle =  mCustomTab.findViewById(R.id.month_text);
+        TextView mUsedDays =  mCustomTab.findViewById(R.id.usedDays_text);
+        mTitle.setText(title);
+        mUsedDays.setText(usedDays);
+        return mCustomTab;
     }
 }
