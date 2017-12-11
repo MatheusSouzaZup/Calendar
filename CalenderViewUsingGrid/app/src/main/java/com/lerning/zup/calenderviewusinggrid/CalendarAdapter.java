@@ -1,6 +1,9 @@
 package com.lerning.zup.calenderviewusinggrid;
 
+import android.support.annotation.ColorInt;
+import android.support.annotation.ColorRes;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +42,8 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
     @Override
     public void onBindViewHolder(final CalendarViewHolder holder, final int position) {
         Day day = mList.get(position);
+        holder.setDotColor(R.color.colorPurple);//metodo que muda a cor do ponto embaixo do numero
+
         holder.onBind(day);
     }
 
@@ -86,6 +91,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
         return mList;
     }
 
+
     public class CalendarViewHolder extends RecyclerView.ViewHolder {
         TextView mTvDay;
         ImageView mIvDot;
@@ -98,6 +104,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
         }
 
         public void onBind(final Day day) {
+
             if (day == null) {
                 mTvDay.setVisibility(View.INVISIBLE);
                 mIvDot.setVisibility(View.INVISIBLE);
@@ -114,6 +121,9 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
                 mTvDay.setAlpha(0.2f);
                 mIvDot.setAlpha(0.2f);
             }
+        }
+        public void setDotColor(@ColorRes int color) {
+            DrawableCompat.setTint(mIvDot.getDrawable(), ContextCompat.getColor(itemView.getContext(),color));
         }
 
         private void setupUsedDay(final Day day) {

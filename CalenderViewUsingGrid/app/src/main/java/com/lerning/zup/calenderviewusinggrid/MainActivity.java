@@ -19,8 +19,8 @@ public class MainActivity extends AppCompatActivity {
 
     ViewPager mViewPager;
     TabLayout mTabLayout;
-    String[] mMonths = {"Dezembro","Janeiro","Fevereiro","Março"};
-    int mCurrentItem = 3;
+    String[] mMonths = {"Dezembro", "Janeiro", "Fevereiro", "Março"};
+    int mCurrentItem = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,15 +45,16 @@ public class MainActivity extends AppCompatActivity {
                 ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.my_calendar, container, false);
                 container.addView(layout);
                 return layout;*/
-
                 MyCalendarView myCalendarView = new MyCalendarView(MainActivity.this, mDates[position]);
+                //Construtor para mudar a cor...
+                //MyCalendarView myCalendarView = new MyCalendarView(MainActivity.this, mDates[position],R.color.colorPurple);
                 container.addView(myCalendarView);
                 return myCalendarView;
             }
 
             @Override
             public void destroyItem(ViewGroup container, int position, Object object) {
-                container.removeView((View)object);
+                container.removeView((View) object);
             }
 
             @Override
@@ -66,38 +67,42 @@ public class MainActivity extends AppCompatActivity {
                 return view == object;
             }
         });
-        mTabLayout.setupWithViewPager(mViewPager);
+
         setupTabs();
     }
+
     private void setupTabs() {
-        int distanceTab = getWindowManager().getDefaultDisplay().getWidth()/4;
-        mTabLayout.setupWithViewPager(mViewPager);
+
+       mTabLayout.setupWithViewPager(mViewPager);
         for (int i = 0; i < mMonths.length; i++) {
             setUpItemTabs(i);
+            setUpItemSpace(i);
         }
-        for(int i=0; i < mTabLayout.getTabCount(); i++) {
-            View tab = ((ViewGroup) mTabLayout.getChildAt(0)).getChildAt(i);
-            tab.setMinimumWidth(getWindowManager().getDefaultDisplay().getWidth() / 2);
-            tab.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-            tab.requestLayout();
-            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) tab.getLayoutParams();
-            p.setMargins(i==0 ? distanceTab : 0 , 0, i == mTabLayout.getTabCount()-1 ? distanceTab : 0, 0);
-        }
-
         mViewPager.setCurrentItem(mCurrentItem);
     }
+
     private void setUpItemTabs(int index) {
         TabLayout.Tab mTab = mTabLayout.getTabAt(index);
         mTab.setCustomView(null);
         mTab.setCustomView(getCustomTab(mMonths[index], "7 dias"));
     }
 
+    private void setUpItemSpace(int index) {
+        int distanceTab = getWindowManager().getDefaultDisplay().getWidth() / 4;
+        View tab = ((ViewGroup) mTabLayout.getChildAt(0)).getChildAt(index);
+        tab.setMinimumWidth(getWindowManager().getDefaultDisplay().getWidth() / 2);
+        tab.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        tab.requestLayout();
+        ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) tab.getLayoutParams();
+        p.setMargins(index == 0 ? distanceTab : 0, 0, index == mTabLayout.getTabCount() - 1 ? distanceTab : 0, 0);
+    }
+
     @NonNull
-    private View getCustomTab(String title,String usedDays) {
+    private View getCustomTab(String title, String usedDays) {
         LayoutInflater mInflater = LayoutInflater.from(getApplicationContext());
         View mCustomTab = mInflater.inflate(R.layout.item_tab_view, null);
-        TextView mTitle =  mCustomTab.findViewById(R.id.month_text);
-        TextView mUsedDays =  mCustomTab.findViewById(R.id.usedDays_text);
+        TextView mTitle = mCustomTab.findViewById(R.id.month_text);
+        TextView mUsedDays = mCustomTab.findViewById(R.id.usedDays_text);
         mTitle.setText(title);
         mUsedDays.setText(usedDays);
         return mCustomTab;

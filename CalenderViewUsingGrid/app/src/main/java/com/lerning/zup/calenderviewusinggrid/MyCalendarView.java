@@ -2,6 +2,12 @@ package com.lerning.zup.calenderviewusinggrid;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.ColorRes;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -23,7 +29,6 @@ public class MyCalendarView extends RelativeLayout implements CalendarAdapter.On
     RecyclerView mRecyclerView;
     View mIvBall;
     View mViewWhite;
-
     private float posYBall;
     private float initScale = 0.5f;
     private int marginTop = 100;
@@ -32,17 +37,25 @@ public class MyCalendarView extends RelativeLayout implements CalendarAdapter.On
 
     public MyCalendarView(Context context) {
         super(context);
+       // setBallColor(R.color.colorPurple);
         mDate = new GregorianCalendar(2018, 2 - 1, 1);
         init();
     }
 
     public MyCalendarView(Context context, AttributeSet attrs) {
         super(context, attrs);
+      //  setBallColor(R.color.colorPurple);
+        init();
+    }
+    public MyCalendarView(Context context, GregorianCalendar date) {
+        super(context);
+        mDate = date;
         init();
     }
 
-    public MyCalendarView(Context context, GregorianCalendar date) {
+    public MyCalendarView(Context context, GregorianCalendar date, @ColorRes int color) {
         super(context);
+        setBallColor(color);
         mDate = date;
         init();
     }
@@ -125,5 +138,9 @@ public class MyCalendarView extends RelativeLayout implements CalendarAdapter.On
                 .alpha(0.82f)
                 .setDuration(200)
                 .start();
+    }
+    public void setBallColor(@ColorRes int color) {
+        Drawable mDrawable = getResources().getDrawable(R.drawable.blue_circle);
+        mDrawable.setTint(getResources().getColor(color));
     }
 }

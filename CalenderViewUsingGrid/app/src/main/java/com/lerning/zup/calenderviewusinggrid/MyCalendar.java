@@ -7,9 +7,9 @@ import java.util.List;
  */
 
 public class MyCalendar {
-    List<Integer> usedDays;
-    Integer firstDay;
-    Integer monthSize;
+    private List<Integer> usedDays;
+    private Integer firstDay;
+    private Integer monthSize;
 
     public List<Integer> getUsedDays() {
         return usedDays;
