@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="@layout/activity_main">
 
@@ -16,8 +16,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorWhite"
-        android:visibility="invisible"
-        android:clickable="true" />
+        android:clickable="true"
+        android:visibility="invisible" />
 
     <RelativeLayout
         android:id="@+id/ball"
@@ -27,9 +27,10 @@
         tools:visibility="visible">
 
         <ImageView
+            android:id="@+id/iv_circle_calendar"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            app:srcCompat="@drawable/blue_circle" />
+            app:srcCompat="@drawable/circle_calendar" />
 
         <TextView
             android:layout_width="wrap_content"

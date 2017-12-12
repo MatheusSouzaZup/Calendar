@@ -6,11 +6,9 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TableLayout;
 import android.widget.TextView;
 
 import java.util.GregorianCalendar;
@@ -72,12 +70,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupTabs() {
-
        mTabLayout.setupWithViewPager(mViewPager);
         for (int i = 0; i < mMonths.length; i++) {
             setUpItemTabs(i);
             setUpItemSpace(i);
         }
+
         mViewPager.setCurrentItem(mCurrentItem);
     }
 
@@ -105,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
         TextView mUsedDays = mCustomTab.findViewById(R.id.usedDays_text);
         mTitle.setText(title);
         mUsedDays.setText(usedDays);
+
         return mCustomTab;
     }
 }

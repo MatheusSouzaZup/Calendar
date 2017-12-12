@@ -24,8 +24,8 @@
         android:layout_height="6dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="5dp"
-        app:srcCompat="@drawable/purple_circle"
         android:visibility="gone"
-        tools:visibility="visible"/>
+        app:srcCompat="@drawable/purple_circle"
+        tools:visibility="visible" />
 
 </LinearLayout>

@@ -1,27 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/month_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="Setembro"
         android:layout_gravity="center_horizontal"
-        android:textSize="24sp"
         android:textColor="@color/colorBlack"
-        />
+        android:textSize="24sp"
+        tools:text="Setembro" />
+
     <TextView
         android:id="@+id/usedDays_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="7 dias"
         android:layout_gravity="center_horizontal"
-        android:textSize="16sp"
         android:textColor="@color/colorBlack"
-        />
+        android:textSize="16sp"
+        tools:text="7 dias" />
 
 </LinearLayout>

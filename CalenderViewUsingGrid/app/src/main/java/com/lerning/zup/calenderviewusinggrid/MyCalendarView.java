@@ -2,9 +2,6 @@ package com.lerning.zup.calenderviewusinggrid;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -14,6 +11,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AnticipateOvershootInterpolator;
 import android.view.animation.OvershootInterpolator;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import java.util.GregorianCalendar;
@@ -29,6 +27,8 @@ public class MyCalendarView extends RelativeLayout implements CalendarAdapter.On
     RecyclerView mRecyclerView;
     View mIvBall;
     View mViewWhite;
+    ImageView mIvCircle;
+
     private float posYBall;
     private float initScale = 0.5f;
     private int marginTop = 100;
@@ -37,14 +37,12 @@ public class MyCalendarView extends RelativeLayout implements CalendarAdapter.On
 
     public MyCalendarView(Context context) {
         super(context);
-       // setBallColor(R.color.colorPurple);
         mDate = new GregorianCalendar(2018, 2 - 1, 1);
         init();
     }
 
     public MyCalendarView(Context context, AttributeSet attrs) {
         super(context, attrs);
-      //  setBallColor(R.color.colorPurple);
         init();
     }
     public MyCalendarView(Context context, GregorianCalendar date) {
@@ -66,6 +64,7 @@ public class MyCalendarView extends RelativeLayout implements CalendarAdapter.On
         mRecyclerView = layout.findViewById(R.id.calendar);
         mIvBall = layout.findViewById(R.id.ball);
         mViewWhite = layout.findViewById(R.id.v_white);
+        mIvCircle = layout.findViewById(R.id.iv_circle_calendar);
 
         marginTopPx = dpToPx(marginTop);
 
@@ -76,8 +75,6 @@ public class MyCalendarView extends RelativeLayout implements CalendarAdapter.On
         mRecyclerView.setAdapter(mAdapter);
 
         mViewWhite.setOnClickListener((v) -> {
-
-
             mIvBall.animate()
                     .y(posYBall)
                     .alpha(0f)
@@ -97,6 +94,8 @@ public class MyCalendarView extends RelativeLayout implements CalendarAdapter.On
                     })
                     .start();
         });
+
+        setBallColor(R.color.colorPurple);
     }
 
     public int dpToPx(int dp) {
@@ -139,8 +138,8 @@ public class MyCalendarView extends RelativeLayout implements CalendarAdapter.On
                 .setDuration(200)
                 .start();
     }
+
     public void setBallColor(@ColorRes int color) {
-        Drawable mDrawable = getResources().getDrawable(R.drawable.blue_circle);
-        mDrawable.setTint(getResources().getColor(color));
+        DrawableCompat.setTint(mIvCircle.getDrawable(), ContextCompat.getColor(getContext(), color));
     }
 }

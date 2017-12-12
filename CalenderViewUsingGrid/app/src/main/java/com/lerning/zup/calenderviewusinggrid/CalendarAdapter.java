@@ -1,6 +1,5 @@
 package com.lerning.zup.calenderviewusinggrid;
 
-import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -36,14 +35,14 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
     @Override
     public CalendarViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_day_calendar, parent, false);
-        return new CalendarViewHolder(view);
+        CalendarViewHolder holder = new CalendarViewHolder(view);
+        holder.setDotColor(R.color.colorPurple);
+        return holder;
     }
 
     @Override
     public void onBindViewHolder(final CalendarViewHolder holder, final int position) {
         Day day = mList.get(position);
-        holder.setDotColor(R.color.colorPurple);//metodo que muda a cor do ponto embaixo do numero
-
         holder.onBind(day);
     }
 
