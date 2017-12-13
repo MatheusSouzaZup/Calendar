@@ -1,5 +1,6 @@
 package com.lerning.zup.calenderviewusinggrid;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
@@ -9,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.GregorianCalendar;
@@ -17,6 +20,9 @@ public class MainActivity extends AppCompatActivity {
 
     ViewPager mViewPager;
     TabLayout mTabLayout;
+    View vLeft;
+    View vRight;
+    View vFake;
     String[] mMonths = {"Dezembro", "Janeiro", "Fevereiro", "Março"};
     int mCurrentItem = 0;
 
@@ -27,6 +33,11 @@ public class MainActivity extends AppCompatActivity {
 
         mViewPager = findViewById(R.id.view_pager);
         mTabLayout = findViewById(R.id.tabLayout);
+        vLeft = findViewById(R.id.vLeft);
+        vRight = findViewById(R.id.vRight);
+        vFake = findViewById(R.id.fakeView);
+        setUpViews();
+
         mViewPager.setCurrentItem(mCurrentItem);
         mViewPager.setAdapter(new PagerAdapter() {
 
@@ -67,10 +78,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
         setupTabs();
+        vLeft.setOnClickListener(v ->
+                mViewPager.setCurrentItem(mTabLayout.getSelectedTabPosition() - 1));
+        vRight.setOnClickListener(v ->
+                mViewPager.setCurrentItem(mTabLayout.getSelectedTabPosition() + 1));
     }
 
     private void setupTabs() {
-       mTabLayout.setupWithViewPager(mViewPager);
+        mTabLayout.setupWithViewPager(mViewPager);
         for (int i = 0; i < mMonths.length; i++) {
             setUpItemTabs(i);
             setUpItemSpace(i);
@@ -106,4 +121,26 @@ public class MainActivity extends AppCompatActivity {
 
         return mCustomTab;
     }
+
+    private void setUpViews() {
+        int height = dpToPx(60);
+        int centerViewSize = getWindowManager().getDefaultDisplay().getWidth() / 2;
+        RelativeLayout.LayoutParams layoutParams;
+        layoutParams = new RelativeLayout.LayoutParams(centerViewSize, height);
+        layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
+        vFake.setLayoutParams(layoutParams);
+
+        layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, height);
+        layoutParams.setMarginStart(centerViewSize + (centerViewSize / 2));
+        vRight.setLayoutParams(layoutParams);
+
+        layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, height);
+        layoutParams.setMarginEnd(centerViewSize + (centerViewSize / 2));
+        vLeft.setLayoutParams(layoutParams);
+    }
+
+    public int dpToPx(int dp) {
+        return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
+    }
+
 }
