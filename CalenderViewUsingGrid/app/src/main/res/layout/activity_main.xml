@@ -16,32 +16,10 @@
         app:tabIndicatorHeight="0dp"
         app:tabMode="scrollable" />
 
-    <View
-        android:id="@+id/fakeView"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:background="@color/colorBlack"
-        android:layout_centerHorizontal="true"
-        android:clickable="true"/>
-
-    <View
-        android:id="@+id/vLeft"
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:layout_alignEnd="@id/fakeView"
-        android:layout_alignParentStart="true"
-        android:background="@color/colorPurple"
-        android:clickable="true"/>
-
-    <View
-        android:id="@+id/vRight"
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignStart="@id/fakeView"
-        android:background="@color/colorBlue"
-        android:clickable="true"/>
-
+    <com.lerning.zup.calenderviewusinggrid.OverTab
+        android:id="@+id/overTab"
+        android:layout_width="match_parent"
+        android:layout_height="60dp" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager"

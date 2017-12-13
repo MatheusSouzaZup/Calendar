@@ -16,13 +16,11 @@ import android.widget.TextView;
 
 import java.util.GregorianCalendar;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OverTab.ClickCallBack {
 
     ViewPager mViewPager;
     TabLayout mTabLayout;
-    View vLeft;
-    View vRight;
-    View vFake;
+    OverTab mOverTab;
     String[] mMonths = {"Dezembro", "Janeiro", "Fevereiro", "Março"};
     int mCurrentItem = 0;
 
@@ -33,10 +31,9 @@ public class MainActivity extends AppCompatActivity {
 
         mViewPager = findViewById(R.id.view_pager);
         mTabLayout = findViewById(R.id.tabLayout);
-        vLeft = findViewById(R.id.vLeft);
-        vRight = findViewById(R.id.vRight);
-        vFake = findViewById(R.id.fakeView);
-        setUpViews();
+
+        mOverTab = findViewById(R.id.overTab);
+        mOverTab.setListener(this);
 
         mViewPager.setCurrentItem(mCurrentItem);
         mViewPager.setAdapter(new PagerAdapter() {
@@ -78,10 +75,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         setupTabs();
-        vLeft.setOnClickListener(v ->
-                mViewPager.setCurrentItem(mTabLayout.getSelectedTabPosition() - 1));
-        vRight.setOnClickListener(v ->
-                mViewPager.setCurrentItem(mTabLayout.getSelectedTabPosition() + 1));
     }
 
     private void setupTabs() {
@@ -122,25 +115,13 @@ public class MainActivity extends AppCompatActivity {
         return mCustomTab;
     }
 
-    private void setUpViews() {
-        int height = dpToPx(60);
-        int centerViewSize = getWindowManager().getDefaultDisplay().getWidth() / 2;
-        RelativeLayout.LayoutParams layoutParams;
-        layoutParams = new RelativeLayout.LayoutParams(centerViewSize, height);
-        layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
-        vFake.setLayoutParams(layoutParams);
-
-        layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, height);
-        layoutParams.setMarginStart(centerViewSize + (centerViewSize / 2));
-        vRight.setLayoutParams(layoutParams);
-
-        layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, height);
-        layoutParams.setMarginEnd(centerViewSize + (centerViewSize / 2));
-        vLeft.setLayoutParams(layoutParams);
+    @Override
+    public void clickPrevious() {
+        mViewPager.setCurrentItem(mTabLayout.getSelectedTabPosition() - 1);
     }
 
-    public int dpToPx(int dp) {
-        return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
+    @Override
+    public void clickNext() {
+        mViewPager.setCurrentItem(mTabLayout.getSelectedTabPosition() + 1);
     }
-
 }
